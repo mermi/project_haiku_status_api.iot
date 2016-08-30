@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var express = require('express');
@@ -41,12 +41,9 @@ app.get('/user/:id/details', api.details.getDetails);
 
 app.listen(config.port, function () {
   console.log('Status app listening on port ' + config.port + '!');
-  recordInitialMetrics(api.status.getStatus,api.status.getMessage,api.status.getSlots);
+  recordInitialMetrics(api.status.getStatus,api.status.getMessage,api.status.getSlots,1);
 });
-
-setup: function (clientId){
-        this.clientId = clientId;
-        this.options = {
+var options = {
             locale: 'locale',
             os: 'osx',
             os_version: 'elcapitan',
@@ -58,11 +55,11 @@ setup: function (clientId){
             app_platform: 'node',
             arch: 'x64',
             logger: logger
-        };
-        this.metrics = new Metrics(this.clientId, this.options);
-    },
-    recordInitialMetrics : function(Status, Message, slots){
+    };
+    this.metrics = new Metrics(this.clientId,this.options);
+
+recordInitialMetrics : function(category, action, label, value){
       this.metrics.recordEventAsync("status_api", "startup", api.status.getStatus, 1);
       this.metrics.recordEventAsync("status_api", "startup", api.status.getMessage, 1);
       this.metrics.recordEventAsync("status_api", "startup", api.status.getSlots, 1);
-    }
+}
