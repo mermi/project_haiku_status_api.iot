@@ -41,6 +41,7 @@ app.get('/user/:id/details', api.details.getDetails);
 
 app.listen(config.port, function () {
   console.log('Status app listening on port ' + config.port + '!');
+  recordInitialMetrics(api.status.getStatus,api.status.getMessage,api.status.getSlots);
 });
 
 setup: function (clientId){
@@ -59,7 +60,9 @@ setup: function (clientId){
             logger: logger
         };
         this.metrics = new Metrics(this.clientId, this.options);
-    };
-    this.metrics.recordEventAsync(category, api.status.getStatus, api.status.getStatus, 1);
-    this.metrics.recordEventAsync(category, api.message.getMessage, api.message.getMessage, 1);
-    this.metrics.recordEventAsync(category, api.slots.getSlots, api.slots.getSlots, 1);
+    },
+    recordInitialMetrics : function(Status, Message, slots){
+      this.metrics.recordEventAsync("status_api", "startup", api.status.getStatus, 1);
+      this.metrics.recordEventAsync("status_api", "startup", api.status.getMessage, 1);
+      this.metrics.recordEventAsync("status_api", "startup", api.status.getSlots, 1);
+    }
