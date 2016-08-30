@@ -4,6 +4,7 @@ var cors = require('cors');
 var express = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
+var Metrics = require('cd-metrics');
 var api = {
   status: require('./api/status'),
   slots: require('./api/slots'),
@@ -41,3 +42,24 @@ app.get('/user/:id/details', api.details.getDetails);
 app.listen(config.port, function () {
   console.log('Status app listening on port ' + config.port + '!');
 });
+
+setup: function (clientId){
+        this.clientId = clientId;
+        this.options = {
+            locale: 'locale',
+            os: 'osx',
+            os_version: 'elcapitan',
+            device: 'pc',
+            app_name: 'haiku-status',
+            app_version: '0.1',
+            app_update_channel: 'develop',
+            app_build_id: '0.1',
+            app_platform: 'node',
+            arch: 'x64',
+            logger: logger
+        };
+        this.metrics = new Metrics(this.clientId, this.options);
+    };
+    this.metrics.recordEventAsync(category, api.status.getStatus, api.status.getStatus, 1);
+    this.metrics.recordEventAsync(category, api.message.getMessage, api.message.getMessage, 1);
+    this.metrics.recordEventAsync(category, api.slots.getSlots, api.slots.getSlots, 1);

@@ -10,7 +10,8 @@
     "mongodb": "^2.2.6",
     "mongoose": "^4.5.9",
     "optimist": "^0.6.1",
-    "serve-index": "^1.8.0"
+    "serve-index": "^1.8.0",
+    "cd-metrics": "0.0.12"
   },
   "devDependencies": {
     "nodemon": "^1.10.0",
