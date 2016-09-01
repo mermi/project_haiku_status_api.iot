@@ -58,7 +58,7 @@ var options = {
     metrics = new Metrics(this.clientId,options);
 
 recordInitialMetrics = function (){
-      metrics.recordEvent("status_api", "startup", api.status.getStatus, 1);
-      metrics.recordEvent("status_api", "startup", api.message.getMessage, 1);
-      metrics.recordEvent("status_api", "startup", api.slots.getSlots, 1);
+      metrics.recordEvent("status_api", api.status.getStatus, "startup", 1);
+      metrics.recordEvent("status_api", api.message.getMessage, "startup", 1);
+      metrics.recordEvent("status_api", api.slots.getSlots, "startup", 1);
 }

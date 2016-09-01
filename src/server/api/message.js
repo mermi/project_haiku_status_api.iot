@@ -22,12 +22,13 @@ module.exports.updateMessage = function (req, res) {
   var update = {
     $set: {
       message: {
-        value : req.body.value, 
-        sender: req.body.sender, 
+        value : req.body.value,
+        sender: req.body.sender,
         'last-modified': new Date()
       }
     }
   };
+  recordInitialMetrics(id,req.body.sender,req.body.value,1);
   var options = { new: true };
 
   user.findByIdAndUpdate(id, update, options, function (err, result) {
